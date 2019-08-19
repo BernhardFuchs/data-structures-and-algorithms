@@ -1,0 +1,22 @@
+{
+  "name": "data-structures-and-algorithms",
+  "version": "1.0.0",
+  "description": "Project about Data structures and algorithms for educational purpose.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BernhardFuchs/data-structures-and-algorithms.git"
+  },
+  "author": "Bernhard Fuchs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BernhardFuchs/data-structures-and-algorithms/issues"
+  },
+  "homepage": "https://github.com/BernhardFuchs/data-structures-and-algorithms#readme",
+  "devDependencies": {
+    "typescript": "^3.5.3"
+  }
+}
