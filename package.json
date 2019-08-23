@@ -4,6 +4,7 @@
   "description": "Project about Data structures and algorithms for educational purpose.",
   "main": "index.js",
   "scripts": {
+    "start": "npx tsc -p . && node dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
