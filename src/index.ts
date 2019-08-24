@@ -1,29 +1,34 @@
-import { bubbleSort } from "./sorting-algorithms";
+import { Graph, nodeFactory } from "./graph";
 
-var randomNumberArray = (length: number, max: number): Array<number> => {
-  return Array(length)
-    .fill(null)
-    .map(() => Math.random() * max);
+const graph = new Graph();
+const NODE_AMOUNT = 2;
+const NUMBER_OF_EDGES = 40;
+let DUPLICATES = 0;
+
+for (let i = 0; i < NODE_AMOUNT; i++) {
+  const node = nodeFactory(`x0${i}`);
+  graph.addNode(node);
+}
+
+const createRandomKeys = (): { key1: number; key2: number } => {
+  let key1: number;
+  let key2: number;
+  do {
+    DUPLICATES++;
+    key1 = Math.floor(Math.random() * NODE_AMOUNT);
+    key2 = Math.floor(Math.random() * NODE_AMOUNT);
+  } while (key1 === key2);
+  return { key1, key2 };
 };
 
-var randomStringArray = (
-  length: number,
-  maxStringLength: number
-): Array<string> => {
-  return Array(length)
-    .fill(null)
-    .map(() =>
-      (Math.random().toString(36) + "00000000000000000").slice(
-        2,
-        maxStringLength + 2
-      )
-    );
+const randomEdges = (numberOfEdges: number = NODE_AMOUNT): void => {
+  for (let i = 0; i < numberOfEdges; i++) {
+    const { key1, key2 } = createRandomKeys();
+    graph.addEdge(`x0${key1}`, `x0${key2}`);
+  }
 };
 
-const arrayToBeSorted = randomStringArray(25, 7);
-console.log("Array to be sorted: ", arrayToBeSorted);
-
-const bubbleSortResult = bubbleSort(arrayToBeSorted);
-
-console.log("Bubble Sorted Array: ", bubbleSortResult.sortedArray);
-console.log("Bubble Sort Steps: ", bubbleSortResult.stepsNeeded);
+randomEdges(NUMBER_OF_EDGES);
+console.log(graph.nodes);
+console.log(graph.edges);
+console.log("Duplicate keys: ", DUPLICATES - NUMBER_OF_EDGES);
