@@ -1,9 +1,15 @@
-import { Graph, nodeFactory } from "./graph";
+import { Graph, GraphSearch } from "./graph";
+import { GraphEntities } from "./graph.entities";
+import Node = GraphEntities.Node;
 
-const graph = new Graph();
-const NODE_AMOUNT = 2;
+const graph = new Graph(true);
+const NODE_AMOUNT = 20;
 const NUMBER_OF_EDGES = 40;
 let DUPLICATES = 0;
+
+const nodeFactory = <T>(key: T): Node<T> => {
+  return { key, children: new Array<Node<T>>() };
+};
 
 for (let i = 0; i < NODE_AMOUNT; i++) {
   const node = nodeFactory(`x0${i}`);
@@ -32,3 +38,14 @@ randomEdges(NUMBER_OF_EDGES);
 console.log(graph.nodes);
 console.log(graph.edges);
 console.log("Duplicate keys: ", DUPLICATES - NUMBER_OF_EDGES);
+
+const graphSearch = new GraphSearch(graph);
+const parentNode = "x012";
+const searchDepth = 2;
+const foundNodes = graphSearch.searchNetwork(parentNode, searchDepth);
+
+console.log("Network size ", foundNodes.length);
+console.log("Found network for ", parentNode);
+foundNodes.forEach(childNode => {
+  console.log("Network member", childNode);
+});
