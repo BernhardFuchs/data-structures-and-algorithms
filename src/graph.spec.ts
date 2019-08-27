@@ -1,5 +1,6 @@
-import { Graph, GraphSearch } from "./graph";
+import { Graph } from "./graph";
 import { GraphEntities } from "./graph.entities";
+import { searchBreadthFirst } from "./graph.search";
 import Node = GraphEntities.Node;
 
 const nodeFactory = <T>(key: T): Node<T> => {
@@ -29,9 +30,7 @@ describe("Non directed Graph search", () => {
   edgeFactory(nonDirectedGraph);
 
   test("should return correct nodes for infinite depth", () => {
-    const graphSearch = new GraphSearch(nonDirectedGraph);
-
-    const network: Array<Node<number>> = graphSearch.searchNetwork(0);
+    const network: Node<number>[] = searchBreadthFirst(nonDirectedGraph, 0);
 
     expect(network).toContain(nonDirectedGraph.findNode(0));
     expect(network).toContain(nonDirectedGraph.findNode(1));

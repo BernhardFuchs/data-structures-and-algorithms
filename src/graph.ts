@@ -1,52 +1,6 @@
 import { GraphEntities } from "./graph.entities";
 import Node = GraphEntities.Node;
 import Edge = GraphEntities.Edge;
-import { Queue } from "./queue";
-
-export class GraphSearch<T> {
-  private foundNodes = new Array<Node<T>>();
-  constructor(private graph: Graph<T>) {}
-
-  // TODO: find more intuitive way for searchDepth parameter
-  // Breadth First Search
-  public searchNetwork(
-    startingNodeKey: T,
-    searchDepth: number = null
-  ): Array<Node<T>> {
-    const _visited: Map<T, boolean> = new Map();
-    this.graph.nodes.forEach(node => {
-      _visited.set(node.key, false);
-    });
-
-    const _startingNode: Node<T> = this.graph.findNode(startingNodeKey);
-    const _queue = new Queue<Node<T>>();
-    _queue.enqueue(_startingNode);
-
-    while (_queue.size !== 0) {
-      const currentNode = _queue.dequeue();
-      _visited.set(currentNode.key, true);
-
-      currentNode.children.forEach(childNode => {
-        if (
-          _visited.get(childNode.key) === false &&
-          this.searchNextLevel(searchDepth, _queue.size)
-        ) {
-          _queue.enqueue(childNode);
-        }
-      });
-    }
-
-    this.graph.nodes.forEach(node => {
-      if (_visited.get(node.key)) this.foundNodes.push(node);
-    });
-
-    return this.foundNodes;
-  }
-
-  private searchNextLevel(level: number | null, queueSize: number): boolean {
-    return level === null || queueSize <= level;
-  }
-}
 
 export class Graph<T> {
   private _nodes: Array<Node<T>>;
