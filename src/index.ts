@@ -1,4 +1,5 @@
-import { Graph, GraphSearch } from "./graph";
+import { Graph } from "./graph";
+import { search } from "./graph.search";
 import { GraphEntities } from "./graph.entities";
 import Node = GraphEntities.Node;
 
@@ -39,10 +40,9 @@ console.log(graph.nodes);
 console.log(graph.edges);
 console.log("Duplicate keys: ", DUPLICATES - NUMBER_OF_EDGES);
 
-const graphSearch = new GraphSearch(graph);
 const parentNode = "x012";
 const searchDepth = 2;
-const foundNodes = graphSearch.searchNetwork(parentNode, searchDepth);
+const foundNodes = search(graph, parentNode, { level: searchDepth });
 
 console.log("Network size ", foundNodes.length);
 console.log("Found network for ", parentNode);

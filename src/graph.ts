@@ -3,19 +3,16 @@ import Node = GraphEntities.Node;
 import Edge = GraphEntities.Edge;
 
 export class Graph<T> {
-  private _nodes: Array<Node<T>>;
-  private _edges: Array<Edge<T>>;
+  private _nodes: Node<T>[] = [];
+  private _edges: Edge<T>[] = [];
 
-  constructor(private isDirected: boolean = false) {
-    this._nodes = new Array<Node<T>>();
-    this._edges = new Array<Edge<T>>();
-  }
+  constructor(private isDirected: boolean = false) {}
 
-  public get nodes(): Array<Node<T>> {
+  public get nodes(): Node<T>[] {
     return this._nodes;
   }
 
-  public get edges(): Array<Edge<T>> {
+  public get edges(): Edge<T>[] {
     return this._edges;
   }
 

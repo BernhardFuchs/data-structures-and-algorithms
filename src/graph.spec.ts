@@ -1,60 +1,27 @@
 import { Graph } from "./graph";
 import { GraphEntities } from "./graph.entities";
-import { searchBreadthFirst } from "./graph.search";
 import Node = GraphEntities.Node;
+import { nodeFactory } from "./graph.spec.helper";
 
-const nodeFactory = <T>(key: T): Node<T> => {
-  return { key, children: new Array<Node<T>>() };
-};
-
-const graphFactory = (
-  numberOfNodes: number,
-  isDirected: boolean
-): Graph<number> => {
-  const graph = new Graph<number>(isDirected);
-  for (let i = 0; i < numberOfNodes; i++) {
-    const node: Node<number> = nodeFactory(i);
-    graph.addNode(node);
-  }
-  return graph;
-};
-
-const edgeFactory = (graph: Graph<number>) => {
-  graph.addEdge(0, 1);
-  graph.addEdge(1, 2);
-  graph.addEdge(2, 3);
-};
-
-describe("Non directed Graph search", () => {
-  const nonDirectedGraph = graphFactory(4, false);
-  edgeFactory(nonDirectedGraph);
-
-  test("should return correct nodes for infinite depth", () => {
-    const network: Node<number>[] = searchBreadthFirst(nonDirectedGraph, 0);
-
-    expect(network).toContain(nonDirectedGraph.findNode(0));
-    expect(network).toContain(nonDirectedGraph.findNode(1));
-    expect(network).toContain(nonDirectedGraph.findNode(2));
-    expect(network).toContain(nonDirectedGraph.findNode(3));
+describe("Graph tests", () => {
+  test("should create a non directed graph by default", () => {
+    const graph: Graph<number> = new Graph();
+    graph.addNode(nodeFactory(1));
+    graph.addNode(nodeFactory(2));
+    graph.addEdge(1, 2);
+    expect(graph.findNode(1).children).toContain(graph.findNode(2));
+    expect(graph.findNode(2).children).toContain(graph.findNode(1));
   });
 
-  test.skip("should return correct nodes for 0 depth", () => {});
+  test("should create a correct directed graph", () => {
+    const graph: Graph<number> = new Graph(true);
+    graph.addNode(nodeFactory(1));
+    graph.addNode(nodeFactory(2));
+    graph.addEdge(1, 2);
+    expect(graph.findNode(1).children).toContain(graph.findNode(2));
+    expect(graph.findNode(2).children).toHaveLength(0);
+  });
 
-  test.skip("should return correct nodes for 1 depth", () => {});
-});
-
-xdescribe("Directed Graph search", () => {
-  const directedGraph = new Graph(true);
-
-  test("should return correct nodes for infinite depth", () => {});
-
-  test("should return correct nodes for 0 depth", () => {});
-
-  test("should return correct nodes for 1 depth", () => {});
-});
-
-describe("Direction Agnostic Tests", () => {
-  test("should create a non directed graph by default", () => {});
   test("should create graph with complex data type", () => {
     type NodeWithData<T> = Node<T> & {
       accountNumber: number;
