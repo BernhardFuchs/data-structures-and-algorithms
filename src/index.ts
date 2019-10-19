@@ -1,7 +1,5 @@
-import { Graph } from "./graph";
-import { search } from "./graph.search";
-import { GraphEntities } from "./graph.entities";
-import Node = GraphEntities.Node;
+import { Graph, Entities, search } from "devfox-ts-adt-graph";
+import Node = Entities.Node;
 
 const graph = new Graph(true);
 const NODE_AMOUNT = 20;
@@ -36,8 +34,8 @@ const randomEdges = (numberOfEdges: number = NODE_AMOUNT): void => {
 };
 
 randomEdges(NUMBER_OF_EDGES);
-console.log(graph.nodes);
-console.log(graph.edges);
+console.log("Graph nodes:\n", graph.nodes);
+console.log("Graph edges:\n", graph.edges);
 console.log("Duplicate keys: ", DUPLICATES - NUMBER_OF_EDGES);
 
 const parentNode = "x012";
