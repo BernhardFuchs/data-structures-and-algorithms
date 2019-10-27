@@ -1,7 +1,7 @@
-import { Graph, Entities, search } from "devfox-ts-adt-graph";
+import { Graph, Entities, getDescendants, Direction } from "devfox-graph";
 import Node = Entities.Node;
 
-const graph = new Graph(true);
+const graph = new Graph(Direction.DIRECTED);
 const NODE_AMOUNT = 20;
 const NUMBER_OF_EDGES = 40;
 let DUPLICATES = 0;
@@ -40,7 +40,7 @@ console.log("Duplicate keys: ", DUPLICATES - NUMBER_OF_EDGES);
 
 const parentNode = "x012";
 const searchDepth = 2;
-const foundNodes = search(graph, parentNode, { level: searchDepth });
+const foundNodes = getDescendants(graph, parentNode, { level: searchDepth });
 
 console.log("Network size ", foundNodes.length);
 console.log("Found network for ", parentNode);
